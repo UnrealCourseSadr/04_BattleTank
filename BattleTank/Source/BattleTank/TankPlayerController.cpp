@@ -2,6 +2,7 @@
 
 #include "TankPlayerController.h"
 #include "GameFramework/Controller.h"
+#include "Engine/World.h"
 
 
 void ATankPlayerController::BeginPlay()
@@ -15,7 +16,7 @@ void ATankPlayerController::BeginPlay()
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing any Tank"));
+		UE_LOG(LogTemp, Warning, TEXT("PlayerController not possessing any Tank"))
 	}
 }
 
@@ -23,7 +24,6 @@ void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	UE_LOG(LogTemp, Warning, TEXT("Player Controller Ticking"));
 	AimTowardsCrosshair();
 }
 
@@ -37,8 +37,20 @@ void ATankPlayerController::AimTowardsCrosshair()
 {
 	if (!GetControlledTank()) { return; }
 
-	// Get world location if line trace through crosshair
+	FVector HitLocation;
+	UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString())
+
 	// If it hits the landscape
 		// Tell controlled tank to aim at this point
+}
+
+// Get world location of line trace tthrough crosshair
+bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
+{
+	// Find the crosshair position in pixel coordinates
+	int32 ViewportSizeX, ViewportSizeY;
+	GetViewportSize(ViewportSizeX, ViewportSizeY);
+
+	FVector2D ScreenLocation = FVector2D(ViewportSizeX * CrosshairLocationX, ViewportSizeY*CrosshairLocationY);
 }
 
