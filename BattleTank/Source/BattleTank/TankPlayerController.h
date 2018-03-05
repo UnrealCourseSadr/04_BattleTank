@@ -28,6 +28,7 @@ private:
 	bool GetSightRayHitLocation(FVector& HitLocation) const;
 
 	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
+	bool GetLookVectorHitDirection(FVector LookDirection, FVector& HitLocation) const;
 
 	UPROPERTY(EditAnywhere)
 	float CrosshairLocationX = 0.5f;
@@ -35,6 +36,7 @@ private:
 	UPROPERTY(EditAnywhere)
 	float CrosshairLocationY = 0.33333;
 
-	
+	UPROPERTY(EditAnywhere)
+	float LineTraceRange = 1000000; // Tank firing distance: 10 KM
 
 };
