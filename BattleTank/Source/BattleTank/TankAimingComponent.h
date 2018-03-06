@@ -18,6 +18,8 @@ public:
 
 	void SetBarrelReference(UStaticMeshComponent* BarrelToSet);
 
+	// TODO Add SetTurretReference
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
@@ -30,5 +32,5 @@ public:
 
 private:
 	UStaticMeshComponent* Barrel = nullptr;
-	
+	void MoveBarrelTowards(FVector AimDirection);
 };
