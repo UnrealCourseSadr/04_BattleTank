@@ -54,11 +54,9 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		HitLocation,
 		LaunchSpeed,
 		false,
-		0.f,
-		0.f,
-		ESuggestProjVelocityTraceOption::DoNotTrace,
-		FCollisionResponseParams::DefaultResponseParam,
-		TArray<AActor*>()
+		0,
+		0,
+		ESuggestProjVelocityTraceOption::DoNotTrace
 	);
 	if (bHaveAimSolution)
 	{
@@ -82,6 +80,6 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
 	
 
-	Barrel->Elevate(5); // TODO Remove magic number
+	Barrel->Elevate(DeltaRotator.Pitch); // TODO Remove magic number
 }
 
