@@ -22,7 +22,5 @@ public:
 
 	virtual void Tick(float DeltaSeconds) override;
 
-	ATank* GetAIControlledTank() const;
-	ATank* GetPlayerTank() const;
 	
 };
