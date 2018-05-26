@@ -20,7 +20,8 @@ void ATankAIController::Tick(float DeltaSeconds)
 	ATank* ControlledTank = Cast<ATank>(GetPawn());
 	if (PlayerTank)
 	{
-		// TODO Move towards the player
+		// Move towards the player
+		MoveToActor(PlayerTank, AcceptanceRadius); // TODO Check radius is in CMs
 
 		// Aim towards the player
 		
