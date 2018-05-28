@@ -1,4 +1,4 @@
-// Fill out your copyright notice in the Description page of Project Settings.
+// Copyright MSadrpour
 
 #pragma once
 
@@ -20,9 +20,6 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void Initialize(UTankTrack* LeftTrackToSet, UTankTrack* RightTrackToSet);
 
-	// TODO Check best protection
-	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
-
 	UFUNCTION(BlueprintCallable, Category = Input)
 	void IntendMoveForward(float Throw);
 
@@ -33,6 +30,8 @@ private:
 	UTankTrack* LeftTrack = nullptr;
 	UTankTrack* RightTrack = nullptr;
 	
+	// Called from the pathfinding logic by the AI controllers
+	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 
 };
