@@ -69,9 +69,21 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 	/// If no solution, do nothing
 }
 
+void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
+{
+	if (!ensure(Barrel && Turret)) { return; }
+	/// Work-out difference between current barrel rotation and AimDirection
+	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
+	FRotator AimAsRotator = AimDirection.Rotation();
+	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
+
+	Barrel->Elevate(DeltaRotator.Pitch);
+	Turret->Rotate(DeltaRotator.Yaw);
+}
+
 void UTankAimingComponent::Fire()
 {
-	if (!ensure(Barrel)) { return; }
+	if (!ensure(Barrel && ProjectileBlueprint)) { return; }
 
 	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 	if (bIsReloaded)
@@ -87,16 +99,3 @@ void UTankAimingComponent::Fire()
 
 
 }
-
-void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
-{
-	if (!ensure(Barrel && Turret)) { return; }
-	/// Work-out difference between current barrel rotation and AimDirection
-	FRotator BarrelRotator = Barrel->GetForwardVector().Rotation();
-	FRotator AimAsRotator = AimDirection.Rotation();
-	FRotator DeltaRotator = AimAsRotator - BarrelRotator;
-
-	Barrel->Elevate(DeltaRotator.Pitch);
-	Turret->Rotate(DeltaRotator.Yaw);
-}
-
