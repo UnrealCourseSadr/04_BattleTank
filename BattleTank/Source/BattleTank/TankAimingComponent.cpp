@@ -6,6 +6,7 @@
 #include "Engine/World.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 
 // Sets default values for this component's properties
@@ -41,7 +42,7 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel)) { return; }
 	if (!ensure(Turret)) { return; }
@@ -66,6 +67,25 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 		
 	}
 	/// If no solution, do nothing
+}
+
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel)) { return; }
+
+	bool bIsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+	if (bIsReloaded)
+	{
+		/// Spawn a projectile at the socket location on the barrel
+		FVector ProjectileLocation = Barrel->GetSocketLocation(FName("Projectile"));
+		FRotator ProjectileRotation = Barrel->GetSocketRotation(FName("Projectile"));
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, ProjectileLocation, ProjectileRotation);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+		LastFireTime = FPlatformTime::Seconds();
+	}
+
+
 }
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
