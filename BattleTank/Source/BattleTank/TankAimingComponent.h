@@ -9,7 +9,7 @@
 
 // Enum for aiming state
 UENUM()
-enum class EFiringStatus : uint8
+enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
@@ -42,12 +42,14 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
 
+	EFiringState GetFiringState() const;
+
 protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
 	UPROPERTY(BlueprintReadOnly, Category = "State")
-	EFiringStatus FiringStatus = EFiringStatus::Reloading;
+	EFiringState FiringState = EFiringState::Reloading;
 
 private:
 	UTankBarrel* Barrel = nullptr;
