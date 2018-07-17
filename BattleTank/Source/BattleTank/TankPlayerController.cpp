@@ -17,6 +17,8 @@ void ATankPlayerController::BeginPlay()
 
 void ATankPlayerController::SetPawn(APawn * InPawn)
 {
+	Super::SetPawn(InPawn);
+
 	if (InPawn)
 	{
 		ATank* PossessedTank = Cast<ATank>(InPawn);
@@ -100,6 +102,6 @@ bool ATankPlayerController::GetLookVectorHitDirection(FVector LookDirection, FVe
 
 void ATankPlayerController::OnPossessedTankDeath()
 {
-
+	StartSpectatingOnly();
 }
 
