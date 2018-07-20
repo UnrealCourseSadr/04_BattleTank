@@ -69,7 +69,7 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& HitLocation) const
 	if (GetLookDirection(ScreenLocation, LookDirection))
 	{
 		/// Line trace along that LookDirection, and see what we hit
-		return GetLookVectorHitDirection(LookDirection, HitLocation);
+		return GetLookVectorHitLocation(LookDirection, HitLocation);
 	}
 	return false;
 }
@@ -81,7 +81,7 @@ bool ATankPlayerController::GetLookDirection(FVector2D ScreenLocation, FVector& 
 
 }
 
-bool ATankPlayerController::GetLookVectorHitDirection(FVector LookDirection, FVector& HitLocation) const
+bool ATankPlayerController::GetLookVectorHitLocation(FVector LookDirection, FVector& HitLocation) const
 {
 	FHitResult HitResult;
 	FVector StartLocation = PlayerCameraManager->GetCameraLocation();
@@ -91,7 +91,7 @@ bool ATankPlayerController::GetLookVectorHitDirection(FVector LookDirection, FVe
 		HitResult,
 		StartLocation,
 		EndLocation,
-		ECC_Visibility))
+		ECC_Camera))
 	{
 		HitLocation = HitResult.Location;
 		return true;
